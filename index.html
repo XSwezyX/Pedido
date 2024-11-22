@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quer Sair Comigo?</title>
+    <style>
+        /* Reset */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        /* Background */
+        .background {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #ffdde1, #ff8a8a);
+            z-index: -1;
+        }
+
+        /* Main content */
+        .content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            text-align: center;
+            color: #fff;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+
+        .heart {
+            width: 400px;
+            height: 400px;
+            background: #ff0047;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            clip-path: path("M 200 60 C 150 0, 0 0, 0 150 C 0 250, 100 360, 200 400 C 300 360, 400 250, 400 150 C 400 0, 250 0, 200 60 Z");
+            box-shadow: 0 0 40px rgba(255, 0, 72, 0.8);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .heart h1 {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 2rem;
+            text-align: center;
+            color: white;
+        }
+
+        /* Buttons */
+        .buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .buttons button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            outline: none;
+        }
+
+        .yes-btn {
+            background: #ff7eb3;
+            color: #fff;
+            box-shadow: 0 4px 10px rgba(255, 0, 72, 0.4);
+        }
+
+        .yes-btn:hover {
+            background: #ff4c8a;
+            box-shadow: 0 8px 20px rgba(255, 0, 72, 0.6);
+        }
+
+        .no-btn {
+            background: #fff;
+            color: #ff4c8a;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .no-btn:hover {
+            background: #ffdde1;
+            color: #ff4c8a;
+            cursor: pointer;
+        }
+
+        /* Heart animation */
+        .floating-heart {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #ff0047;
+            clip-path: path("M 50 20 C 30 0, 0 0, 0 30 C 0 50, 25 70, 50 100 C 75 70, 100 50, 100 30 C 100 0, 70 0, 50 20 Z");
+            animation: floatUp 4s ease-in-out infinite;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100%);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-150%);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+
+    <div class="content">
+        <div class="heart">
+            <h1>Quer sair comigo, Luana?</h1>
+        </div>
+        <div class="buttons">
+            <button class="yes-btn" id="yesButton">Sim</button>
+            <button class="no-btn" id="noButton">Não</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const noButton = document.getElementById("noButton");
+            const yesButton = document.getElementById("yesButton");
+
+            // Move "Não" button
+            noButton.addEventListener("mouseover", () => {
+                const screenWidth = window.innerWidth;
+                const screenHeight = window.innerHeight;
+
+                const buttonWidth = noButton.offsetWidth;
+                const buttonHeight = noButton.offsetHeight;
+
+                const newX = Math.random() * (screenWidth - buttonWidth);
+                const newY = Math.random() * (screenHeight - buttonHeight);
+
+                noButton.style.position = "absolute";
+                noButton.style.left = `${newX}px`;
+                noButton.style.top = `${newY}px`;
+            });
+
+            // "Sim" button click
+            yesButton.addEventListener("click", () => {
+                alert("Ela disse sim! ❤️");
+                createHeartEffect();
+            });
+
+            function createHeartEffect() {
+                for (let i = 0; i < 50; i++) {
+                    const heart = document.createElement("div");
+                    heart.className = "floating-heart";
+
+                    // Randomize position and size
+                    heart.style.left = Math.random() * 100 + "vw";
+                    heart.style.animationDelay = Math.random() * 2 + "s";
+                    heart.style.width = heart.style.height = Math.random() * 50 + 50 + "px";
+
+                    document.body.appendChild(heart);
+
+                    // Remove heart after animation
+                    setTimeout(() => heart.remove(), 4000);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
